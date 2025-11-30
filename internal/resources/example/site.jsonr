@@ -1,0 +1,13 @@
+{
+  // Set the default title for all pages.
+  "Title": "Example",
+
+  // This menu data structure is used to render the top links
+  // on each page.
+  "Menu": [
+    {"Title": "Home", "Path": "/"},
+    {"Title": "About", "Path": "/about.html"},
+    {"Title": "Simple HTML", "Path": "/simple.html"},
+  ],
+  "Debug": true,
+}

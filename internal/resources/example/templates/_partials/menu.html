@@ -1,0 +1,13 @@
+{{- /*
+Renders the menu and sets the "active" css class when the current page title matches.
+*/}}
+    <nav>
+      <ul>
+        {{- $page := .Page }}
+        {{- range .Site.Menu}}
+        <li>
+          <a href="{{.Path}}" class="{{if eq .Title $page.Title}}active{{end}}">{{.Title}}</a>
+        </li>
+        {{- end}}
+      </ul>
+    </nav>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.LanguageCode }}">
+<head>
+{{ template "_partials/head.html" . }}
+</head>
+<body>
+  <header>
+{{ template "_partials/header.html" . }}
+  </header>
+  <main>
+    {{ block "main" . }}
+      {{ .Content }}
+    {{ end }}
+  </main>
+  <footer>
+    {{ template "_partials/footer.html" . }}
+  </footer>
+</body>
+{{ if .LiveReload }}
+<script src="/_int/live-reload.js"></script>
+{{ end }}
+{{ if .Site.Debug }}
+{{ jsonify .DebugMap | htmlComment}}
+{{ end }}
+</html>

@@ -1,0 +1,108 @@
+:root {
+  --main-font-family: verdana, sans-serif;
+  --main-color-blue: blue;
+  --main-bg-color: white;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  background: var(--main-bg-color);
+  font-family: var(--main-font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+header {
+  display: flex;
+  margin: 1rem;
+}
+
+nav {
+  display: flex;
+}
+
+nav ul {
+  list-style: none;
+
+  display: flex;
+  align-items: flex-end;
+
+  /* spacing between normal menu items */
+  gap: 1.5rem;
+}
+
+nav ul li {
+  display: flex;
+}
+
+header .spacer {
+  flex-grow: 1;
+  /* pushes right-side items to the opposite end */
+}
+
+nav a {
+  /* color: var(--main-color-blue); */
+  text-decoration: none;
+}
+
+nav a.active {
+  font-weight: bold;
+}
+
+nav a:hover,
+nav a:focus {
+  text-decoration: underline;
+}
+
+main {
+  margin: 1rem;
+  border-top: 1px var(--main-color-blue) solid;
+}
+
+main>*:first-child {
+  margin-top: 1rem;
+}
+
+p {
+  margin: 1rem 0;
+  line-height: 1.5em;
+}
+
+figure {
+  text-align: center;
+}
+
+figcaption {
+  font-size: smaller;
+  text-align: center;
+  color: #ccc;
+}
+
+footer {
+  font-size: 0.7rem;
+  text-align: center;
+  color: var(--gray-light);
+  padding: 1rem;
+}
+
+footer>*:first-child {
+  border-top: 1px var(--main-color-blue) solid;
+  padding: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  /* This is a hack, it might be eventually better to just to swap the color variables. */
+  html {
+    filter: invert(95%) hue-rotate(180deg) brightness(0.95);
+  }
+
+  img:not([src$=".svg"]) {
+    filter: invert(95%) hue-rotate(180deg) brightness(1.05);
+  }
+}
