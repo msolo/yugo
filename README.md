@@ -12,11 +12,11 @@ After some hours experimenting with `hugo` and `jekyll`, `yugo` was born to solv
 # Main Features
   * Simple, opinionated and useful by default.
   * Produces correct output on every build and every update.
-  * Efficient live reloading during development
-  * Markdown processing for `.md` files
-    * Automatically resolves links to Markdown files so GitHub Markdown files can be published as-is
+  * Efficient live reloading during development.
+  * Markdown processing for `.md` files.
+    * Automatically resolves links to Markdown files so GitHub Markdown files can be published as-is.
   * Support for frontmatter in [JSONR](https://github.com/msolo/jsonr) format which gets exposed as `.Page` in templates.
-  * Raw HTML passthrough in `.html` files
+  * Raw HTML passthrough in `.html` files.
 
 
 # Creating A New Site
@@ -27,7 +27,7 @@ yugo init demo
 yugo serve --site demo
 ```
 
-This will publish the website at http://localhost:8817/ and rebuilt automatically when any changes are made.
+This will publish the website at http://localhost:8817/ and rebuild automatically when any changes are made.
 
 ## Publishing
 
@@ -42,7 +42,7 @@ yugo build --site demo
 
 ## /content
 
-Markdown (`.md`) and HTML (`.hmtl`) files in `content` are evaluated and rendered in the `public` output directory  using `templates/base.tmpl`
+Markdown (`.md`) and HTML (`.hmtl`) files in `content` are evaluated and rendered in the `public` output directory using `templates/base.tmpl`.
 
 Other files are copied through to `public`.
 
