@@ -20,7 +20,7 @@ type Watcher struct {
 	stop     chan struct{}
 }
 
-func NewWatcher(paths []string, debounce time.Duration) (*Watcher, error) {
+func NewWatcher(paths []string, ignore []string, debounce time.Duration) (*Watcher, error) {
 	w, err := fsnotify.NewWatcher()
 	if err != nil {
 		return nil, err
@@ -32,11 +32,10 @@ func NewWatcher(paths []string, debounce time.Duration) (*Watcher, error) {
 		debounce: debounce,
 		trigger:  make(chan struct{}, 1),
 		stop:     make(chan struct{}),
-		ignore: []string{
+		ignore: append([]string{
 			".git",
 			".DS_Store",
-			"public",
-		},
+		}, ignore...),
 	}
 
 	for _, root := range paths {
@@ -55,7 +54,10 @@ func (w *Watcher) shouldIgnore(path string) bool {
 		if base == ig {
 			return true
 		}
-		if strings.Contains(path, string(filepath.Separator)+ig+string(filepath.Separator)) {
+		if strings.Contains(string(filepath.Separator)+path, string(filepath.Separator)+ig+string(filepath.Separator)) {
+			return true
+		}
+		if strings.HasSuffix(string(filepath.Separator)+path, string(filepath.Separator)+ig) {
 			return true
 		}
 	}
@@ -67,7 +69,10 @@ func (w *Watcher) addDirRecursive(root string) error {
 		if err != nil {
 			return err
 		}
-		if d.IsDir() && !w.shouldIgnore(path) {
+		if d.IsDir() {
+			if w.shouldIgnore(path) {
+				return filepath.SkipDir
+			}
 			return w.w.Add(path)
 		}
 		return nil

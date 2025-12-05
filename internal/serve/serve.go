@@ -58,7 +58,7 @@ func Run(opts *build.Options) {
 
 	// Rebuild on changes
 	debounce := 750 * time.Millisecond
-	watcher, err := NewWatcher([]string{opts.SiteDir()}, debounce)
+	watcher, err := NewWatcher([]string{opts.SiteDir()}, []string{opts.OutDir()}, debounce)
 	if err != nil {
 		log.Fatal(err)
 	}
