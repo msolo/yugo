@@ -65,3 +65,12 @@ This file sets the `.Site` variables available in all templates.
 This file sets variables that control `yugo` itself. The presence of this file defines the root from which all other relative paths are calculated.
 
  - **`OutDir`** controls which directory is used for output. This is relative to the location of the site directory which contains `yugo.jsonr`.
+
+# Debugging
+
+Setting `"Debug": true` in `site.jsonr` is a good start. This will export all exposed template variables in an HTML comment at the end of every page.
+
+You can also render a single file:
+```
+yugo build --site demo demo/content/about.md ./test.html
+```

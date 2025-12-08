@@ -148,7 +148,7 @@ func isInline(n *html.Node) bool {
 
 	switch strings.ToLower(n.Data) {
 	case "a", "abbr", "b", "bdi", "bdo", "cite",
-		"code", "data", "dfn", "em", "i", "kbd", "label",
+		"code", "data", "del", "dfn", "em", "i", "ins", "kbd", "label",
 		"mark", "q", "rp", "rt", "ruby", "s", "samp",
 		"small", "span", "strong", "sub", "sup", "time",
 		"u", "var", "wbr":

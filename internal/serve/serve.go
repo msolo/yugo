@@ -22,7 +22,7 @@ func noCache(h http.Handler) http.Handler {
 
 func Run(opts *build.Options) {
 	builder := func() {
-		build.Run(opts)
+		build.Run(opts, nil)
 	}
 
 	var clients sync.Map

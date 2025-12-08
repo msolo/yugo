@@ -24,16 +24,18 @@ func TestRenderFile(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// Create markdown file
-	markdownTest := `# Header
+	input := `# Test Header
 
-Some fine content.`
+Some ~~fine~~ content.`
+	expected := `<html><head></head><body><h1 id="test-header">Test Header</h1><p>Some <del>fine</del> content.</p></body></html>`
+
+	// Create markdown file
 	mdPath := filepath.Join(contentDir, "test.md")
-	if err := os.WriteFile(mdPath, []byte(markdownTest), 0644); err != nil {
+	if err := os.WriteFile(mdPath, []byte(input), 0644); err != nil {
 		t.Fatal(err)
 	}
 
-	// Create simple template
+	// Create simple template as internally required.
 	baseTemplate := `<html><head></head><body>{{.Content}}</body></html>`
 	templatePath := filepath.Join(templateDir, "base.html")
 	if err := os.WriteFile(templatePath, []byte(baseTemplate), 0644); err != nil {
@@ -57,12 +59,9 @@ Some fine content.`
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	result = normalize(result)
-
-	// Compare with golden result
-	expected := `<html><head></head><body><h1>Header</h1><p>Some fine content.</p></body></html>`
 	expected = normalize(expected)
-
 	if expected != result {
 		diff := strDiff(expected, result)
 		t.Fatalf("output diff:\n--- expected ---\n%s\n--- output ---\n%s\n\n%s",

@@ -8,6 +8,10 @@
     socket = new WebSocket('ws://' + window.location.host + '/_int/live-reload.ws');
 
     socket.onopen = function () {
+      // Treat a reconnect as an implicit reload.
+      if (reconnectAttempts > 0) {
+        location.reload()
+      }
       reconnectAttempts = 0;  // Reset reconnection attempts on success
     };
 

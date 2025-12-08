@@ -9,5 +9,7 @@
     {"Title": "About", "Path": "/about.html"},
     {"Title": "Simple HTML", "Path": "/simple.html"},
   ],
-  "Debug": true,
+
+  // Disable debug by default
+  "Debug": false,
 }
