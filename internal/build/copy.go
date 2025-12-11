@@ -18,6 +18,9 @@ func copyTree(src, dst string, overwrite bool) error {
 		if info.IsDir() {
 			return nil
 		}
+		if info.Mode()&os.ModeSymlink != 0 {
+			return fmt.Errorf("symlinks not handled: %s", path)
+		}
 
 		rel, _ := filepath.Rel(src, path)
 		outPath := filepath.Join(dst, rel)
@@ -41,6 +44,9 @@ func copyContent(contentDir, outDir string) error {
 		}
 		if info.IsDir() {
 			return nil
+		}
+		if info.Mode()&os.ModeSymlink != 0 {
+			return fmt.Errorf("symlinks not handled: %s", path)
 		}
 
 		// skip files we process
@@ -94,6 +100,9 @@ func CopyEmbeddedResources(dst string, src fs.FS) error {
 		}
 		if d.IsDir() {
 			return nil
+		}
+		if d.Type()&fs.ModeSymlink != 0 {
+			return fmt.Errorf("symlinks not handled: %s", path)
 		}
 
 		outPath := filepath.Join(dst, path)

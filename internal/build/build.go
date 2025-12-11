@@ -163,20 +163,21 @@ func Run(opts *Options, args []string) {
 	fmt.Println("Building site...")
 
 	if err := renderContent(opts); err != nil {
-		log.Fatal(err)
+		log.Fatal("render content failed: ", err)
 	}
 
 	if err := copyTree(opts.StaticDir(), opts.OutDir(), false); err != nil {
-		log.Fatal(err)
+		log.Fatal("copy static failed: ", err)
 	}
 
 	if err := copyContent(opts.ContentDir(), opts.OutDir()); err != nil {
+		log.Fatal("copy content failed: ", err)
 		log.Fatal(err)
 	}
 
 	// Copy internal resources last so that our core functionality always works.
 	if err := CopyEmbeddedResources(opts.OutDir(), resources.RootFS); err != nil {
-		log.Fatal(err)
+		log.Fatal("copy embedded failed: ", err)
 	}
 
 	fmt.Println("Build complete.")
@@ -200,18 +201,18 @@ func renderContent(opts *Options) error {
 	siteConfig := map[string]any{}
 	raw, err := os.ReadFile(sitePath)
 	if err != nil {
-		return nil
+		return err
 	}
 	if err := jsonr.Unmarshal(raw, &siteConfig); err != nil {
-		return nil
+		return err
 	}
 
 	// Remove the output directory entirely to ensure clean output every time.
 	if err := os.RemoveAll(opts.OutDir()); err != nil {
-		return nil
+		return err
 	}
 	if err := os.MkdirAll(opts.OutDir(), 0755); err != nil {
-		return nil
+		return err
 	}
 
 	tmpl, err := loadTemplates(opts)
@@ -225,6 +226,10 @@ func renderContent(opts *Options) error {
 		}
 		if d.IsDir() {
 			return nil
+		}
+
+		if d.Type()&fs.ModeSymlink != 0 {
+			return fmt.Errorf("symlinks not handled: %s", path)
 		}
 
 		if !shouldProcessFile(path) {
