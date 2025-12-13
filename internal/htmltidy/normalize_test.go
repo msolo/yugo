@@ -121,6 +121,30 @@ func TestInlineFormatting2(t *testing.T) {
 `
 	testNormalizer(t, in, expected)
 }
+func TestInlineFormatting3(t *testing.T) {
+	in := `<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<p>
+   <a>A1</a> <a>B</a>
+</p>
+</body>
+</html>
+`
+	expected := `<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <p>
+            <a>A1</a> <a>B</a>
+        </p>
+    </body>
+</html>
+`
+	testNormalizer(t, in, expected)
+}
 
 func TestBlockFormatting(t *testing.T) {
 	in := `<!DOCTYPE html>

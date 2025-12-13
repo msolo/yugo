@@ -68,6 +68,7 @@ func normalizeWhitespace(mode int, nl ...*html.Node) {
 					childMode = ModePreserve
 				} else if isInline(n) {
 					childMode = ModeNormalize
+					mode = ModeNormalize
 				}
 			}
 
@@ -79,6 +80,9 @@ func normalizeWhitespace(mode int, nl ...*html.Node) {
 				continue
 			case ModeNormalize:
 				n.Data = collapseWhitespace(n.Data)
+				if isAllWhitespace(n.Data) && !isInline(n.PrevSibling) && !isInline(n.NextSibling) {
+					n.Data = ""
+				}
 			case ModeFree:
 				n.Data = collapseWhitespace(n.Data)
 				if isAllWhitespace(n.Data) {
